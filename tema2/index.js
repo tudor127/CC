@@ -54,30 +54,6 @@ http.createServer(function(req, res){
 
             }
         
-        }else if(route_params[1] == 'img'){
-
-            var image = route_params[2];
-            var type = image.split('.').pop();
-
-            fs.readFile( './img/' + image, function( err, data ) {
-
-                if ( err ) {
-
-                    res.statusCode = 404;
-                    res.write(JSON.stringify({'error' : 'Resource not found'}));
-                    res.end();
-
-                }else{
-
-                    res.setHeader('Content-Type' , 'image/' + type);
-                    res.statusCode = 200;
-                    res.write( data );
-                    res.end();
-
-                }
-
-              });
-
         }else{
 
             res.statusCode = 400;
@@ -89,29 +65,52 @@ http.createServer(function(req, res){
 
         if(pathname == '/categories'){
 
+            data = '';
+
             if(query_params.has('data')){
 
-                var data = query_params.get('data');
+                data = query_params.get('data');
 
-                res.end(data);
-            
             }
-        
+
+            var controller = require('./controllers/category');
+            
+            controller.addCategory(data, (output) => {
+
+                res.statusCode = output.statusCode;
+                res.write(JSON.stringify(output.data));
+                res.end();
+
+            });
+
+            
         }else if(pathname == '/products'){
+            
+            data = '';
 
             if(query_params.has('data')){
 
-                var data = query_params.get('data');
+                data = query_params.get('data');
 
-                res.end(data);
-            
             }
+
+            var controller = require('./controllers/product');
+            
+            controller.addProduct(data, (output) => {
+
+                res.statusCode = output.statusCode;
+                res.write(JSON.stringify(output.data));
+                res.end();
+
+            });
         
+        }else{
+
+            res.statusCode = 400;
+
+            res.end(JSON.stringify({'error' : 'Bad request'}));
+
         }
-
-        res.statusCode = 400;
-
-        res.end(JSON.stringify({'error' : 'Bad request'}));
 
     }else if(method == 'PUT'){
 

@@ -30,7 +30,7 @@ function runQuery(query){
 
                         if (error){
 
-                            reject('Query error');
+                            reject(error);
 
                         }else{
 
