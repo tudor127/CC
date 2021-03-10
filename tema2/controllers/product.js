@@ -6,8 +6,8 @@ function getProduct(id, callback){
 
     if(isNaN(id)){
 
-        output.statusCode = 400;
-        output.data = {'error': 'Bad request'};
+        output.statusCode = 404;
+        output.data = {'error': 'Not found'};
 
         return callback(output);
 
@@ -28,7 +28,7 @@ function getProduct(id, callback){
                 }else{
 
                     output.statusCode = 404;
-                    output.data = {'error' : 'Resource not found'};
+                    output.data = {'error' : 'Not found'};
 
                 }
 
@@ -137,6 +137,124 @@ function addProduct(data, callback){
 
 }
 
+function replaceProduct(id, data, callback){
+
+    var output = {};
+
+    var validation = validateProduct(data);
+
+    if(!validation.success){
+
+        output.statusCode = 400;
+        output.data = validation;
+
+        return callback(output);
+
+    }else{
+
+        data = JSON.parse(data);
+
+        model.replaceProduct(id, data, (code) => {
+
+            if(code == 1){
+
+                output.statusCode = 200;
+                output.data = {'message' : 'Product replaced'};
+
+            }else if(code == 2){
+
+                output.statusCode = 404;
+                output.data = {'error' : 'Product not found'};
+
+            }else{
+
+                output.statusCode = 500;
+                output.data = {'error' : 'Internal server error'};
+
+            }
+
+            return callback(output);
+
+        });
+
+    }
+
+}
+
+
+function updateProduct(id, data, callback){
+
+    var output = {};
+
+    var validation = partiallyValidateProduct(data);
+
+    if(!validation.success){
+
+        output.statusCode = 400;
+        output.data = validation;
+
+        return callback(output);
+
+    }else{
+
+        data = JSON.parse(data);
+
+        model.updateProduct(id, data, (code) => {
+
+            if(code == 1){
+
+                output.statusCode = 200;
+                output.data = {'message' : 'Product updated'};
+
+            }else if(code == 2){
+
+                output.statusCode = 404;
+                output.data = {'error' : 'Product not found'};
+
+            }else{
+
+                output.statusCode = 500;
+                output.data = {'error' : 'Internal server error'};
+
+            }
+
+            return callback(output);
+
+        });
+
+    }
+
+}
+
+function deleteProduct(id, callback){
+
+    var output = {};
+
+    model.deleteProduct(id, (code) => {
+
+        if(code == 1){
+
+            output.statusCode = 200;
+            output.data = {'message' : 'Product deleted'};
+
+        }else if(code == 2){
+
+            output.statusCode = 404;
+            output.data = {'error' : 'Product not found'};
+
+        }else{
+
+            output.statusCode = 500;
+            output.data = {'error' : 'Internal server error'};
+
+        }
+
+        return callback(output);
+
+    });
+
+}
+
 function validateProduct(data){
 
     var res = {};
@@ -169,6 +287,19 @@ function validateProduct(data){
         }else{
 
             res.errors.push({'field' : 'stock', 'error' : 'stock is missing'});
+
+        }
+
+        if(data.hasOwnProperty('category')){
+
+            if(isNaN(data.category)){
+
+                res.errors.push({'field' : 'category', 'error' : 'category is not valid'});
+
+            }
+        }else{
+
+            res.errors.push({'field' : 'category', 'error' : 'category is missing'});
 
         }
 
@@ -218,6 +349,65 @@ function validateProduct(data){
     
 }
 
+
+function partiallyValidateProduct(data){//price & stock
+
+    var res = {};
+    res.errors = [];
+
+    try{
+
+        data = JSON.parse(data);
+        
+        if(data.hasOwnProperty('price')){
+
+            if(isNaN(data.price)){
+
+                res.errors.push({'field' : 'price', 'error' : 'price is not valid'});
+
+            }
+        }else{
+
+            res.errors.push({'field' : 'price', 'error' : 'price is missing'});
+
+        }
+
+        if(data.hasOwnProperty('stock')){
+
+            if(isNaN(data.stock)){
+
+                res.errors.push({'field' : 'stock', 'error' : 'stock is not valid'});
+
+            }
+        }else{
+
+            res.errors.push({'field' : 'stock', 'error' : 'stock is missing'});
+
+        }
+
+    }catch{
+
+        res.errors.push({'error' : 'Invalid format'});
+
+    }
+
+    if(res.errors.length > 0){
+        
+        res.success = false;
+
+    }else{
+
+        res.success = true;
+
+    }
+
+    return res;
+    
+}
+
 module.exports.getProduct = getProduct;
 module.exports.getAllProducts = getAllProducts;
 module.exports.addProduct = addProduct;
+module.exports.replaceProduct = replaceProduct;
+module.exports.updateProduct = updateProduct;
+module.exports.deleteProduct = deleteProduct;
