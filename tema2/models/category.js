@@ -2,13 +2,12 @@ const db = require('../db');
 
 function getCategories(id){
 
-    return db.runQuery(`SELECT * from categories`);
+    return db.runQuery(`SELECT id, name from categories WHERE status = 1`);
 
 }
 
 function addCategory(data, callback){
 
-    let status = parseInt(data.status);
     let name = data.name;
 
     db.runQuery(`SELECT 1 from categories WHERE name LIKE '${name}'`).then( //check if already exists
@@ -20,7 +19,7 @@ function addCategory(data, callback){
                 return callback(2); //category already exists
             }
 
-            db.runQuery(`INSERT INTO categories(id, status, name) VALUES (NULL, ${status}, '${name}') `).then(
+            db.runQuery(`INSERT INTO categories(id, status, name) VALUES (NULL, 1, '${name}') `).then(
                 
                 (res) => {
 
@@ -49,55 +48,12 @@ function addCategory(data, callback){
 
 }
 
-
-function replaceCategory(id, data, callback){
-
-    let status = parseInt(data.status);
-    let name = data.name;
-
-    db.runQuery(`SELECT 1 from categories WHERE id = ${id}`).then( //check if category exists
-
-        (result) => {
-
-            if(result.length < 1){
-
-                return callback(2); //category not found
-            }
-
-            db.runQuery(`REPLACE INTO categories(id, status, name) VALUES (${id}, ${status}, '${name}') `).then(
-                
-                (res) => {
-
-                    return callback(1); //success
- 
-                },
-
-                (err) => {
-
-                    console.log(err);
-
-                    return callback(0); //query error
-
-                }
-            );
-
-        },
-
-        (error) => {
-
-            return callback(0); //query error
-
-        }
-
-    );
-
-}
 
 function updateCategory(id, data, callback){
 
-    let status = parseInt(data.status);
+    let name = data.name;
 
-    db.runQuery(`SELECT 1 from categories WHERE id = ${id}`).then( //check if category exists
+    db.runQuery(`SELECT 1 from categories WHERE id = ${id} AND status=1`).then( //check if category exists
 
         (result) => {
 
@@ -106,7 +62,7 @@ function updateCategory(id, data, callback){
                 return callback(2); //category not found
             }
 
-            db.runQuery(`UPDATE categories set status = ${status} where id = ${id} `).then(
+            db.runQuery(`UPDATE categories SET name = '${name}' WHERE id = ${id} `).then(
                 
                 (res) => {
 
@@ -146,7 +102,7 @@ function deleteCategory(id, callback){
                 return callback(2); //category not found
             }
 
-            db.runQuery(`DELETE FROM categories WHERE id = ${id} `).then(
+            db.runQuery(`UPDATE categories SET status=0 WHERE id = ${id} `).then(
                 
                 (res) => {
 
@@ -177,6 +133,5 @@ function deleteCategory(id, callback){
 
 module.exports.getCategories = getCategories;
 module.exports.addCategory = addCategory;
-module.exports.replaceCategory = replaceCategory;
 module.exports.updateCategory = updateCategory;
 module.exports.deleteCategory = deleteCategory;

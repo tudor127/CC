@@ -2,13 +2,13 @@ const db = require('../db');
 
 function getProduct(id){
 
-    return db.runQuery(`SELECT * from products WHERE id = ${id}`);
+    return db.runQuery(`SELECT id, price, stock, name, description, category from products WHERE status=1 AND id = ${id}`);
 
 }
 
 function getAllProducts(){
 
-    return db.runQuery(`SELECT * from products`);
+    return db.runQuery(`SELECT id, price, stock, name, description, category from products WHERE status=1`);
 
 }
 
@@ -29,7 +29,7 @@ function addProduct(data, callback){
                 return callback(2); //product already exists
             }
 
-            db.runQuery(`INSERT INTO products(id, price, stock, name, description, category) VALUES (NULL, ${price}, ${stock}, '${name}', '${description}', ${category}) `).then(
+            db.runQuery(`INSERT INTO products(id, price, stock, name, description, category, status) VALUES (NULL, ${price}, ${stock}, '${name}', '${description}', ${category}, 1) `).then(
                 
                 (res) => {
 
@@ -67,7 +67,7 @@ function replaceProduct(id, data, callback){
     let description = data.description;
     let category = parseInt(data.category);
 
-    db.runQuery(`SELECT 1 from products WHERE id = ${id}`).then( //check if product exists
+    db.runQuery(`SELECT 1 from products WHERE status = 1 AND id = ${id}`).then( //check if product exists
 
         (result) => {
 
@@ -76,7 +76,7 @@ function replaceProduct(id, data, callback){
                 return callback(2); //product not found
             }
 
-            db.runQuery(`REPLACE INTO products(id, price, stock, name, description, category) VALUES (${id}, ${price}, ${stock}, '${name}', '${description}', ${category}) `).then(
+            db.runQuery(`REPLACE INTO products(id, price, stock, name, description, category, status) VALUES (${id}, ${price}, ${stock}, '${name}', '${description}', ${category}, 1) `).then(
                 
                 (res) => {
 
@@ -110,7 +110,7 @@ function updateProduct(id, data, callback){
     let price = parseFloat(data.price);
     let stock = parseInt(data.stock);
 
-    db.runQuery(`SELECT 1 from products WHERE id = ${id}`).then( //check if product exists
+    db.runQuery(`SELECT 1 from products WHERE status=1 AND id = ${id}`).then( //check if product exists
 
         (result) => {
 
@@ -159,7 +159,7 @@ function deleteProduct(id, callback){
                 return callback(2); //product not found
             }
 
-            db.runQuery(`DELETE FROM products WHERE id = ${id}`).then(
+            db.runQuery(`UPDATE products set status=0 WHERE id = ${id}`).then(
                 
                 (res) => {
 

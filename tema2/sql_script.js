@@ -1,6 +1,6 @@
 const db = require('./db');
 
-db.runQuery('CREATE TABLE IF NOT EXISTS products (id INT AUTO_INCREMENT PRIMARY KEY, price DECIMAL(10,2) NOT NULL, stock INT NOT NULL, name VARCHAR(200) NOT NULL,description VARCHAR(1000) NOT NULL, category INT NOT NULL)').then(
+db.runQuery('CREATE TABLE IF NOT EXISTS products (id INT AUTO_INCREMENT PRIMARY KEY, price DECIMAL(10,2) NOT NULL, stock INT NOT NULL, name VARCHAR(200) NOT NULL,description VARCHAR(1000) NOT NULL, category INT NOT NULL, status TINYINT(2) DEFAULT 1)').then(
     (result) => {
         console.log(result);
     },
@@ -10,7 +10,7 @@ db.runQuery('CREATE TABLE IF NOT EXISTS products (id INT AUTO_INCREMENT PRIMARY 
     }
 );
 
-db.runQuery('CREATE TABLE IF NOT EXISTS categories (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(200) NOT NULL, status TINYINT(2) DEFAULT 0)').then(
+db.runQuery('CREATE TABLE IF NOT EXISTS categories (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(200) NOT NULL, status TINYINT(2) DEFAULT 1)').then(
     (result) => {
         console.log(result);
     },

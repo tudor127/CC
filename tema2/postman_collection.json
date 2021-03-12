@@ -1,0 +1,651 @@
+{
+	"info": {
+		"_postman_id": "1037d35c-67b9-4958-8bbf-6f030320380c",
+		"name": "CC - tema2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "All categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product - 404 Error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products/1000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Categories",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/categories?data={\"name\":\"Toys\"}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"name\":\"Toys\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories - 409 Error",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/categories?data={\"name\":\"Clothes\"}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"name\":\"Clothes\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories - 400 Error",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/categories?data={}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products?data={\"price\":\"50.00\", \"stock\":10, \"name\":\"Samsung Galaxy A6\", \"description\":\"Samsung Galaxy A6  Dual SIM 3 GB RAM 32 GB Smartphone\", \"category\":6}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"price\":\"50.00\", \"stock\":10, \"name\":\"Samsung Galaxy A6\", \"description\":\"Samsung Galaxy A6  Dual SIM 3 GB RAM 32 GB Smartphone\", \"category\":6}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products - 409 Error",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products?data={\"price\":\"34.23\", \"stock\":3, \"name\":\"Laptop Bag\", \"description\":\"The best laptop bag\", \"category\":1}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"price\":\"34.23\", \"stock\":3, \"name\":\"Laptop Bag\", \"description\":\"The best laptop bag\", \"category\":1}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products - 400 Error",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products?data={\"price\":\"34.23\", \"stock\":3, \"name\":\"Jacket\"}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"price\":\"34.23\", \"stock\":3, \"name\":\"Jacket\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "Categories",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/categories/4?data={\"name\":\"PC COMPONENTS\"}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"categories",
+								"4"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"name\":\"PC COMPONENTS\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories - 404 Error",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/categories/1000?data={\"name\":\"Phone Chargers\"}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"categories",
+								"1000"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"name\":\"Phone Chargers\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories - 400 Error",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/categories/4?data={}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"categories",
+								"4"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories - 405 Error",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/categories?data={\"nam\":\"Clothes\"}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"nam\":\"Clothes\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products/1?data={\"price\":\"34.23\", \"stock\":3, \"name\":\"Laptop Bag\", \"description\":\"Laptop Bag description\", \"category\":1}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products",
+								"1"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"price\":\"34.23\", \"stock\":3, \"name\":\"Laptop Bag\", \"description\":\"Laptop Bag description\", \"category\":1}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products - 404 Error",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products/1000?data={\"price\":\"34.23\", \"stock\":3, \"name\":\"Laptop Bag\", \"description\":\"Laptop Bag description\", \"category\":1}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products",
+								"1000"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"price\":\"34.23\", \"stock\":3, \"name\":\"Laptop Bag\", \"description\":\"Laptop Bag description\", \"category\":1}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products - 400 Error",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products/1?data={\"price\":\"34.23\", \"stock\":3, \"name\":\"Laptop Bag\", \"category\":1}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products",
+								"1"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"price\":\"34.23\", \"stock\":3, \"name\":\"Laptop Bag\", \"category\":1}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products - 405 Error",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products?data={\"price\":\"34.23\", \"stock\":3, \"name\":\"Laptop Bag\", \"description\":\"Laptop Bag description\", \"category\":1}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"price\":\"34.23\", \"stock\":3, \"name\":\"Laptop Bag\", \"description\":\"Laptop Bag description\", \"category\":1}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PATCH",
+			"item": [
+				{
+					"name": "Products",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products/1?data={\"price\":\"60.50\", \"stock\":20}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products",
+								"1"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"price\":\"60.50\", \"stock\":20}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products - 404 Error",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products/1000?data={\"price\":\"60.50\", \"stock\":20}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products",
+								"1000"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"price\":\"60.50\", \"stock\":20}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products - 400 Error",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products/1?data={\"price\":\"60.50\"}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products",
+								"1"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"price\":\"60.50\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products - 405 Error",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products?data={\"price\":\"60.50\", \"stock\":20}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{\"price\":\"60.50\", \"stock\":20}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "Categories",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/categories/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"categories",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories - 404 Error",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/categories/1000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"categories",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products - 404 Error",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/products/1000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"products",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

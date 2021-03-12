@@ -7,7 +7,7 @@ function getProduct(id, callback){
     if(isNaN(id)){
 
         output.statusCode = 404;
-        output.data = {'error': 'Not found'};
+        output.data = {'error': 'Product not found'};
 
         return callback(output);
 
@@ -28,7 +28,7 @@ function getProduct(id, callback){
                 }else{
 
                     output.statusCode = 404;
-                    output.data = {'error' : 'Not found'};
+                    output.data = {'error' : 'Product not found'};
 
                 }
 

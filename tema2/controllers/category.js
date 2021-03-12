@@ -80,7 +80,7 @@ function addCategory(data, callback){
 
 }
 
-function replaceCategory(id, data, callback){
+function updateCategory(id, data, callback){
 
     var output = {};
 
@@ -90,50 +90,6 @@ function replaceCategory(id, data, callback){
 
         output.statusCode = 400;
         output.data = validation;
-
-        return callback(output);
-
-    }else{
-
-        data = JSON.parse(data);
-
-        model.replaceCategory(id, data, (code) => {
-
-            if(code == 1){
-
-                output.statusCode = 200;
-                output.data = {'message' : 'Category replaced'};
-
-            }else if(code == 2){
-
-                output.statusCode = 404;
-                output.data = {'error' : 'Category not found'};
-
-            }else{
-
-                output.statusCode = 500;
-                output.data = {'error' : 'Internal server error'};
-
-            }
-
-            return callback(output);
-
-        });
-
-    }
-
-}
-
-function updateCategory(id, data, callback){
-
-    var output = {};
-
-    var errors = validateStatus(data);
-
-    if(errors.length > 0){
-
-        output.statusCode = 400;
-        output.data = errors;
 
         return callback(output);
 
@@ -207,20 +163,6 @@ function validateCategory(data){
 
         data = JSON.parse(data);
 
-        if(data.hasOwnProperty('status')){
-
-            if(parseInt(data.status) != 0 && parseInt(data.status) != 1){
-
-                res.errors.push({'field' : 'status', 'error' : 'status must be 0 or 1'});
-
-            }
-
-        }else{
-
-            res.errors.push({'field' : 'status', 'error' : 'status is missing'});
-
-        }
-
         if(data.hasOwnProperty('name')){
 
             if(data.name.length < 3){
@@ -249,38 +191,7 @@ function validateCategory(data){
     return res;
 }
 
-function validateStatus(data){
-
-    let errors = [];
-    
-    try{
-        data = JSON.parse(data);
-
-        if(data.hasOwnProperty('status')){
-
-            if(parseInt(data.status) != 0 && parseInt(data.status) != 1){
-
-                errors.push({'field' : 'status', 'error' : 'status must be 0 or 1'});
-
-            }
-
-        }else{
-
-            errors.push({'field' : 'status', 'error' : 'status is missing'});
-
-        }
-
-    }catch(err){
-
-        errors.push({'error' : 'Invalid format'});
-
-    }
-
-    return errors;
-}
-
 module.exports.getCategories = getCategories;
 module.exports.addCategory = addCategory;
-module.exports.replaceCategory = replaceCategory;
 module.exports.updateCategory = updateCategory;
 module.exports.deleteCategory = deleteCategory;
