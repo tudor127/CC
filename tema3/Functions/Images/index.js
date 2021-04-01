@@ -1,23 +1,10 @@
 const escapeHtml = require('escape-html');
 
-/**
- * HTTP Cloud Function.
- *
- * @param {Object} req Cloud Function request context.
- *                     More info: https://expressjs.com/en/api.html#req
- * @param {Object} res Cloud Function response context.
- *                     More info: https://expressjs.com/en/api.html#res
- */
-
-  // Imports the Google Cloud client library
 const vision = require('@google-cloud/vision');
 
-// Creates a client
 const visionClient = new vision.ImageAnnotatorClient();
 
-// Imports the Google Cloud client library
 const {Storage} = require('@google-cloud/storage');
-// Creates a client using Application Default Credentials
 const storage = new Storage();
 
 const {Datastore} = require('@google-cloud/datastore');
@@ -29,19 +16,11 @@ const datastore = new Datastore({
 
 const kindName = 'image';
 
-// Creates a client from a Google service account key
-// const storage = new Storage({keyFilename: 'key.json'});
-
-/**
- * TODO(developer): Uncomment these variables before running the sample.
- */
-// The ID of your GCS bucket
 const bucketName = 'simplechat';
 
 async function listBucket(callback) {
 	var baseURL = "https://storage.googleapis.com/simplechat/";
 
-    // Lists files in the bucket
     const [files] = await storage.bucket(bucketName).getFiles();
 
     var images = [];
@@ -54,7 +33,6 @@ async function listBucket(callback) {
 }
 
 async function getLabels(image){
-	// Performs label detection on the image file
 	var [visionLabels] = await visionClient.labelDetection(image);
 	var labels = visionLabels.labelAnnotations;
 
@@ -70,8 +48,6 @@ async function getLabels(image){
 async function getAllLabels(list){
 
 	var result = [];
-
-	// list = [list[0]];
 
 	for(var image of list){
 		var labels = await getLabels(image);
