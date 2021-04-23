@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const Users = require('../models').User;
+const Users = require('../models/users').User;
 const config =  require('../config');
 
 const authenticate = params => {
@@ -16,7 +16,7 @@ const authenticate = params => {
               throw new Error('Authentication failed. Wrong password.');
 
           const payload = {
-              username: user.username,
+              username: user.Username,
               time: new Date()
           };
           var token = jwt.sign(payload, config.jwtSecret, {
